@@ -1,4 +1,5 @@
 ﻿using Terminal.Gui;
+using BasicTCPModbusApp.MainUI;
 
 namespace BasicTCPModbusApp;
 
@@ -58,71 +59,8 @@ public class MainApp
             var button = new Button("OK");
             button.Clicked += () => { Application.RequestStop(); };
             buttons.Add(button);
-            var dialog = new Dialog("Test Title", 40, 20,
+            var dialog = new NetworkDialog("Network Dialog", 40, 20,
                 buttons.ToArray());
-            var frame = new FrameView("Network Options")
-            {
-                X = Pos.Center(),
-                Y = 1,
-                Width = Dim.Percent(75),
-                Height = 10
-            };
-
-            var labelIp = new Label("IP Address:")
-            {
-                X = 0,
-                Y = 0,
-                Width = 15,
-                Height = 1,
-                TextAlignment = Terminal.Gui.TextAlignment.Right,
-            };
-            frame.Add(labelIp);
-            var ipEdit = new TextField("127.0.0.1")
-            {
-                X = Pos.Right(labelIp) + 1,
-                Y = Pos.Top(labelIp),
-                Width = 20,
-                Height = 1
-            };
-            frame.Add(ipEdit);
-
-            var labelPort = new Label("Port:")
-            {
-                X = 0,
-                Y = Pos.Bottom (labelIp),
-                Width = 15,
-                Height = 1,
-                TextAlignment = Terminal.Gui.TextAlignment.Right,
-            };
-            frame.Add(labelPort);
-            var portEdit = new TextField("502")
-            {
-                X = Pos.Right(labelPort) + 1,
-                Y = Pos.Top(labelPort),
-                Width = 20,
-                Height = 1
-            };
-            frame.Add(portEdit);
-
-            var labelSlaveId = new Label("Slave-id:")
-            {
-                X = 0,
-                Y = Pos.Bottom (labelPort),
-                Width = 15,
-                Height = 1,
-                TextAlignment = Terminal.Gui.TextAlignment.Right,
-            };
-            frame.Add(labelSlaveId);
-            var slaveidEdit = new TextField("0")
-            {
-                X = Pos.Right(labelSlaveId) + 1,
-                Y = Pos.Top(labelSlaveId),
-                Width = 20,
-                Height = 1
-            };
-            frame.Add(slaveidEdit);
-
-            dialog.Add(frame);
             Application.Run(dialog);
         });
     }

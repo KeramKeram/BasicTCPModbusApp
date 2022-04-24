@@ -16,7 +16,7 @@ public class MainApp
             Height = Dim.Fill()
         };
 
-        Action showDialogDelegate = CreateNetworkDialogDelegate();
+        Action showDialogDelegate = CreateNetworkDialogDelegateAction();
 
         top.Add(mainUiApp);
         top.Add(CreateMenuBar(top, showDialogDelegate));
@@ -50,32 +50,79 @@ public class MainApp
         return n == 0;
     }
 
-    static Action CreateNetworkDialogDelegate()
+    static Action CreateNetworkDialogDelegateAction()
     {
         return new Action(() =>
         {
-            int width = int.Parse("10");
-            int height = int.Parse("10");
-            int numButtons = int.Parse("1");
-
             var buttons = new List<Button>();
-            var clicked = -1;
-            for (int i = 0; i < numButtons; i++)
-            {
-                var buttonId = i;
-                //var button = new Button (btnText [buttonId % 10],
-                //	is_default: buttonId == 0);
-                var button = new Button("OK");
-                button.Clicked += () =>
-                {
-                    clicked = buttonId;
-                    Application.RequestStop();
-                };
-                buttons.Add(button);
-            }
-
-            var dialog = new Dialog("Test Title", width, height,
+            var button = new Button("OK");
+            button.Clicked += () => { Application.RequestStop(); };
+            buttons.Add(button);
+            var dialog = new Dialog("Test Title", 40, 20,
                 buttons.ToArray());
+            var frame = new FrameView("Network Options")
+            {
+                X = Pos.Center(),
+                Y = 1,
+                Width = Dim.Percent(75),
+                Height = 10
+            };
+
+            var labelIp = new Label("IP Address:")
+            {
+                X = 0,
+                Y = 0,
+                Width = 15,
+                Height = 1,
+                TextAlignment = Terminal.Gui.TextAlignment.Right,
+            };
+            frame.Add(labelIp);
+            var ipEdit = new TextField("127.0.0.1")
+            {
+                X = Pos.Right(labelIp) + 1,
+                Y = Pos.Top(labelIp),
+                Width = 20,
+                Height = 1
+            };
+            frame.Add(ipEdit);
+
+            var labelPort = new Label("Port:")
+            {
+                X = 0,
+                Y = Pos.Bottom (labelIp),
+                Width = 15,
+                Height = 1,
+                TextAlignment = Terminal.Gui.TextAlignment.Right,
+            };
+            frame.Add(labelPort);
+            var portEdit = new TextField("502")
+            {
+                X = Pos.Right(labelPort) + 1,
+                Y = Pos.Top(labelPort),
+                Width = 20,
+                Height = 1
+            };
+            frame.Add(portEdit);
+
+            var labelSlaveId = new Label("Slave-id:")
+            {
+                X = 0,
+                Y = Pos.Bottom (labelPort),
+                Width = 15,
+                Height = 1,
+                TextAlignment = Terminal.Gui.TextAlignment.Right,
+            };
+            frame.Add(labelSlaveId);
+            var slaveidEdit = new TextField("0")
+            {
+                X = Pos.Right(labelSlaveId) + 1,
+                Y = Pos.Top(labelSlaveId),
+                Width = 20,
+                Height = 1
+            };
+            frame.Add(slaveidEdit);
+
+            dialog.Add(frame);
             Application.Run(dialog);
         });
     }

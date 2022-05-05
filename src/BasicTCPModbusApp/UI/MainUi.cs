@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.ObjectModel;
 using Terminal.Gui;
 using NStack;
 
@@ -6,11 +7,12 @@ namespace BasicTCPModbusApp.MainUI;
 
 public class MainUi : Window
 {
-    private List<Tuple<Label, Label>> mRegistersUi;
+    private List<Tuple<Label, TextField>> mRegistersUi;
 
     public MainUi() : base("MyApp")
     {
         InitControlls();
+        mRegistersUi = new List<Tuple<Label, TextField>>();
     }
 
     private void InitControlls()

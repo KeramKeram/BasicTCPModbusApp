@@ -1,3 +1,4 @@
+using System.Collections;
 using Terminal.Gui;
 using NStack;
 
@@ -5,9 +6,16 @@ namespace BasicTCPModbusApp.MainUI;
 
 public class MainUi : Window
 {
+    private List<Tuple<Label, Label>> mRegistersUi;
+
     public MainUi() : base("MyApp")
     {
-        var subWin = new Window($"Centered Sub Window with 10 character margin")
+        InitControlls();
+    }
+
+    private void InitControlls()
+    {
+        var subWin = new Window($"Control")
         {
             X = Pos.Center(),
             Y = 1,
@@ -69,6 +77,24 @@ public class MainUi : Window
             Text = "Start Pooling"
         };
         subWin.Add(poolingButton);
+        
+        var setRegisterButton = new Button()
+        {
+            X = Pos.Right(registerTypeLabel),
+            Y = poolingButton.Y,
+            Text = "Set Register"
+        };
+        subWin.Add(setRegisterButton);
+        
+        var registerValueToSet = new TextField
+        {
+            X = Pos.Right(setRegisterButton),
+            Y = setRegisterButton.Y,
+            Width = 10,
+            Height = 10,
+            Text = ""
+        };
+        subWin.Add(registerValueToSet);
         this.Add(subWin);
     }
 }

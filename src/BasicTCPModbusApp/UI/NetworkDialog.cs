@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Runtime.Intrinsics.X86;
 using NStack;
 using Terminal.Gui;
 

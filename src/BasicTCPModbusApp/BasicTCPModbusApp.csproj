@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Modbus.Net.Core" Version="1.3.10" />
     <PackageReference Include="Terminal.Gui" Version="1.5.0" />
   </ItemGroup>
 

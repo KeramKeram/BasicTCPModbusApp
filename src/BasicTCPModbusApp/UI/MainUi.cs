@@ -8,16 +8,17 @@ namespace BasicTCPModbusApp.MainUI;
 public class MainUi : Window
 {
     private List<Tuple<Label, TextField>> mRegistersUi;
+    private Window mControlWindow;
 
     public MainUi() : base("MyApp")
     {
         InitControlls();
-        mRegistersUi = new List<Tuple<Label, TextField>>();
+        InitRegistersUi();
     }
 
     private void InitControlls()
     {
-        var subWin = new Window($"Control")
+        mControlWindow = new Window($"Control")
         {
             X = Pos.Center(),
             Y = 1,
@@ -26,7 +27,7 @@ public class MainUi : Window
         };
 
         var displayLengthLabel = new Label($"Display Length:");
-        subWin.Add(displayLengthLabel);
+        mControlWindow.Add(displayLengthLabel);
 
         var displayLenghtValue = new TextField
         {
@@ -37,7 +38,7 @@ public class MainUi : Window
             Text = ""
         };
 
-        subWin.Add(displayLenghtValue);
+        mControlWindow.Add(displayLenghtValue);
 
         var registerTypeLabel = new Label
         {
@@ -45,7 +46,7 @@ public class MainUi : Window
             Y = displayLengthLabel.Y,
             Text = "Register Type:"
         };
-        subWin.Add(registerTypeLabel);
+        mControlWindow.Add(registerTypeLabel);
 
         var registerTypeRadio = new RadioGroup(new ustring[]
             { "Coils Reg.", "Input Status Reg.", "Input Register Reg.", "Holding Reg." })
@@ -54,7 +55,7 @@ public class MainUi : Window
             Y = displayLengthLabel.Y,
             SelectedItem = 0,
         };
-        subWin.Add(registerTypeRadio);
+        mControlWindow.Add(registerTypeRadio);
 
         var statusLabel = new Label
         {
@@ -62,7 +63,7 @@ public class MainUi : Window
             Y = registerTypeRadio.Y,
             Text = "Status:"
         };
-        subWin.Add(statusLabel);
+        mControlWindow.Add(statusLabel);
 
         var statusLabelValue = new Label
         {
@@ -70,7 +71,7 @@ public class MainUi : Window
             Y = registerTypeRadio.Y,
             Text = ""
         };
-        subWin.Add(statusLabelValue);
+        mControlWindow.Add(statusLabelValue);
 
         var poolingButton = new Button()
         {
@@ -78,7 +79,7 @@ public class MainUi : Window
             Y = Pos.Bottom(registerTypeRadio) + 1,
             Text = "Start Pooling"
         };
-        subWin.Add(poolingButton);
+        mControlWindow.Add(poolingButton);
         
         var setRegisterButton = new Button()
         {
@@ -86,7 +87,7 @@ public class MainUi : Window
             Y = poolingButton.Y,
             Text = "Set Register"
         };
-        subWin.Add(setRegisterButton);
+        mControlWindow.Add(setRegisterButton);
         
         var registerValueToSet = new TextField
         {
@@ -96,7 +97,20 @@ public class MainUi : Window
             Height = 10,
             Text = ""
         };
-        subWin.Add(registerValueToSet);
-        this.Add(subWin);
+        mControlWindow.Add(registerValueToSet);
+        this.Add(mControlWindow);
+    }
+
+    private void InitRegistersUi()
+    {
+        mRegistersUi = new List<Tuple<Label, TextField>>();
+        var registersFrame = new Window($"Control")
+        {
+            X = Pos.Center(),
+            Y = Pos.Bottom(mControlWindow),
+            Width = Dim.Fill(5),
+            Height = 20
+        };
+        this.Add(registersFrame);
     }
 }

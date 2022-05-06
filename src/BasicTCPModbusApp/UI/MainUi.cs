@@ -7,8 +7,9 @@ namespace BasicTCPModbusApp.MainUI;
 
 public class MainUi : Window
 {
-    private List<Tuple<Label, TextField>> mRegistersUi;
-    private Window mControlWindow;
+    private List<Tuple<Label, TextField>>? _mRegistersUi;
+    private Window? _mControlWindow;
+    private TextField _mDisplayLenghtTextField = new TextField();
 
     public MainUi() : base("MyApp")
     {
@@ -18,7 +19,7 @@ public class MainUi : Window
 
     private void InitControlls()
     {
-        mControlWindow = new Window($"Control")
+        _mControlWindow = new Window($"Control")
         {
             X = Pos.Center(),
             Y = 1,
@@ -27,26 +28,23 @@ public class MainUi : Window
         };
 
         var displayLengthLabel = new Label($"Display Length:");
-        mControlWindow.Add(displayLengthLabel);
+        _mControlWindow.Add(displayLengthLabel);
 
-        var displayLenghtValue = new TextField
-        {
-            X = Pos.Right(displayLengthLabel) + 1,
-            Y = displayLengthLabel.Y,
-            Width = 10,
-            Height = 10,
-            Text = ""
-        };
+        _mDisplayLenghtTextField.X = Pos.Right(displayLengthLabel) + 1;
+        _mDisplayLenghtTextField.Y = displayLengthLabel.Y;
+        _mDisplayLenghtTextField.Width = 10;
+        _mDisplayLenghtTextField.Height = 10;
+        _mDisplayLenghtTextField.Text = "90";
 
-        mControlWindow.Add(displayLenghtValue);
+        _mControlWindow.Add(_mDisplayLenghtTextField);
 
         var registerTypeLabel = new Label
         {
-            X = Pos.Right(displayLenghtValue) + 10,
+            X = Pos.Right(_mDisplayLenghtTextField) + 10,
             Y = displayLengthLabel.Y,
             Text = "Register Type:"
         };
-        mControlWindow.Add(registerTypeLabel);
+        _mControlWindow.Add(registerTypeLabel);
 
         var registerTypeRadio = new RadioGroup(new ustring[]
             { "Coils Reg.", "Input Status Reg.", "Input Register Reg.", "Holding Reg." })
@@ -55,7 +53,7 @@ public class MainUi : Window
             Y = displayLengthLabel.Y,
             SelectedItem = 0,
         };
-        mControlWindow.Add(registerTypeRadio);
+        _mControlWindow.Add(registerTypeRadio);
 
         var statusLabel = new Label
         {
@@ -63,7 +61,7 @@ public class MainUi : Window
             Y = registerTypeRadio.Y,
             Text = "Status:"
         };
-        mControlWindow.Add(statusLabel);
+        _mControlWindow.Add(statusLabel);
 
         var statusLabelValue = new Label
         {
@@ -71,7 +69,7 @@ public class MainUi : Window
             Y = registerTypeRadio.Y,
             Text = ""
         };
-        mControlWindow.Add(statusLabelValue);
+        _mControlWindow.Add(statusLabelValue);
 
         var poolingButton = new Button()
         {
@@ -79,7 +77,7 @@ public class MainUi : Window
             Y = Pos.Bottom(registerTypeRadio) + 1,
             Text = "Start Pooling"
         };
-        mControlWindow.Add(poolingButton);
+        _mControlWindow.Add(poolingButton);
         
         var setRegisterButton = new Button()
         {
@@ -87,7 +85,7 @@ public class MainUi : Window
             Y = poolingButton.Y,
             Text = "Set Register"
         };
-        mControlWindow.Add(setRegisterButton);
+        _mControlWindow.Add(setRegisterButton);
         
         var registerValueToSet = new TextField
         {
@@ -97,17 +95,18 @@ public class MainUi : Window
             Height = 10,
             Text = ""
         };
-        mControlWindow.Add(registerValueToSet);
-        this.Add(mControlWindow);
+        _mControlWindow.Add(registerValueToSet);
+        this.Add(_mControlWindow);
     }
 
     private void InitRegistersUi()
     {
-        mRegistersUi = new List<Tuple<Label, TextField>>();
+        string registerAmountStr = _mDisplayLenghtTextField.Text.ToString() ?? "1";
+        _mRegistersUi = new List<Tuple<Label, TextField>>(int.Parse(registerAmountStr));
         var registersFrame = new Window($"Control")
         {
             X = Pos.Center(),
-            Y = Pos.Bottom(mControlWindow),
+            Y = Pos.Bottom(_mControlWindow),
             Width = Dim.Fill(5),
             Height = 20
         };

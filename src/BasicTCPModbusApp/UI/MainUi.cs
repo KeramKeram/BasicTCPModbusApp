@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.ObjectModel;
+using System;
+using System.Data;
 using Terminal.Gui;
 using NStack;
 
@@ -7,9 +9,10 @@ namespace BasicTCPModbusApp.MainUI;
 
 public class MainUi : Window
 {
-    private List<Tuple<Label, TextField>>? _mRegistersUi;
+    private Dictionary<int, string>? _mRegistersUi;
     private Window? _mControlWindow;
     private TextField _mDisplayLenghtTextField = new TextField();
+    private Window? _mRegisterWindow;
 
     public MainUi() : base("MyApp")
     {
@@ -102,14 +105,47 @@ public class MainUi : Window
     private void InitRegistersUi()
     {
         string registerAmountStr = _mDisplayLenghtTextField.Text.ToString() ?? "1";
-        _mRegistersUi = new List<Tuple<Label, TextField>>(int.Parse(registerAmountStr));
-        var registersFrame = new Window($"Control")
+        int registerAmount = int.Parse(registerAmountStr);
+        _mRegistersUi = new Dictionary<int, string>(registerAmount);
+        _mRegisterWindow= new Window($"Registers")
         {
             X = Pos.Center(),
             Y = Pos.Bottom(_mControlWindow),
             Width = Dim.Fill(5),
             Height = 20
         };
-        this.Add(registersFrame);
+
+        TableView tableView = new TableView () {
+            X = 0,
+            Y = 0,
+            Width = Dim.Fill (),
+            Height = Dim.Fill (1),
+        };
+        _mRegisterWindow.Add(tableView);
+        this.Add(_mRegisterWindow);
+        
+        int numberOfColumns = (registerAmount / 10) + 1;
+        var dt = new DataTable ();
+        for (int x = 0; x < numberOfColumns; x++)
+        {
+            dt.Columns.Add("");
+        }
+
+        for (int t = 0; t < registerAmount; t++)
+        {
+            _mRegistersUi[t] = new string("x:" + t.ToString());
+        }
+        
+        string[] regArray = new string[10];
+        
+        for (int i = 0; i < registerAmount/10;i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                if (((i + j) * 10) < _mRegistersUi.Count) regArray[j] = _mRegistersUi[((i + j) * 10)];
+            }
+            dt.Rows.Add (regArray);
+        }
+        tableView.Table = dt;
     }
 }

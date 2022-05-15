@@ -137,15 +137,15 @@ public class MainUi : Window
         }
         
         string[] regArray = new string[10];
-        
-        for (int i = 0; i < registerAmount/10;i++)
+        for (int i = 0; i < (_mRegistersUi.Count/10) + 1; i++)
         {
-            for (int j = 0; j < 10; j++)
+            for (int j = 1; j < 10; j++)
             {
-                if (((i + j) * 10) < _mRegistersUi.Count) regArray[j] = _mRegistersUi[((i + j) * 10)];
+                if (i + ((j - 1) * 10) < _mRegistersUi.Count && i + ((j - 1) * 10) >= 0) regArray[j-1] = _mRegistersUi[i + ((j-1)*10)];
             }
-            dt.Rows.Add (regArray);
+            dt.Rows.Add(regArray);
         }
+
         tableView.Table = dt;
     }
 }

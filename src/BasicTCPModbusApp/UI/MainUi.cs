@@ -13,6 +13,7 @@ public class MainUi : Window
     private Window? _mControlWindow;
     private TextField _mDisplayLenghtTextField = new TextField();
     private Window? _mRegisterWindow;
+    TableView? _mTableView;
 
     public MainUi() : base("MyApp")
     {
@@ -115,13 +116,13 @@ public class MainUi : Window
             Height = 20
         };
 
-        TableView tableView = new TableView () {
+        _mTableView = new TableView () {
             X = 0,
             Y = 0,
             Width = Dim.Fill (),
             Height = Dim.Fill (1),
         };
-        _mRegisterWindow.Add(tableView);
+        _mRegisterWindow.Add(_mTableView);
         this.Add(_mRegisterWindow);
         
         int numberOfColumns = (registerAmount / 10) + 1;
@@ -146,6 +147,6 @@ public class MainUi : Window
             dt.Rows.Add(regArray);
         }
 
-        tableView.Table = dt;
+        _mTableView.Table = dt;
     }
 }

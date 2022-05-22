@@ -83,7 +83,7 @@ public class MainUi : Window
             Text = "Start Pooling"
         };
         _mControlWindow.Add(poolingButton);
-        
+
         var setRegisterButton = new Button()
         {
             X = Pos.Right(registerTypeLabel),
@@ -91,14 +91,25 @@ public class MainUi : Window
             Text = "Set Register"
         };
         _mControlWindow.Add(setRegisterButton);
-        
-        var registerValueToSet = new TextField
+
+        var registerAddressToSet = new TextField
         {
             X = Pos.Right(setRegisterButton),
             Y = setRegisterButton.Y,
             Width = 10,
             Height = 10,
-            Text = ""
+            Text = "Address"
+        };
+
+        _mControlWindow.Add(registerAddressToSet);
+
+        var registerValueToSet = new TextField
+        {
+            X = Pos.Right(registerAddressToSet) + 1,
+            Y = setRegisterButton.Y,
+            Width = 10,
+            Height = 10,
+            Text = "Value"
         };
         _mControlWindow.Add(registerValueToSet);
         this.Add(_mControlWindow);
@@ -109,7 +120,7 @@ public class MainUi : Window
         string registerAmountStr = _mDisplayLenghtTextField.Text.ToString() ?? "1";
         int registerAmount = int.Parse(registerAmountStr);
         _mRegistersUi = new Dictionary<int, string>(registerAmount);
-        _mRegisterWindow= new Window($"Registers")
+        _mRegisterWindow = new Window($"Registers")
         {
             X = Pos.Center(),
             Y = Pos.Bottom(_mControlWindow),
@@ -117,17 +128,18 @@ public class MainUi : Window
             Height = 20
         };
 
-        _mTableView = new TableView () {
+        _mTableView = new TableView()
+        {
             X = 0,
             Y = 0,
-            Width = Dim.Fill (),
-            Height = Dim.Fill (1),
+            Width = Dim.Fill(),
+            Height = Dim.Fill(1),
         };
         _mRegisterWindow.Add(_mTableView);
         this.Add(_mRegisterWindow);
-        
+
         int numberOfColumns = (registerAmount / 10) + 1;
-        var dt = new DataTable ();
+        var dt = new DataTable();
         for (int x = 0; x < numberOfColumns; x++)
         {
             dt.Columns.Add("");
@@ -137,13 +149,13 @@ public class MainUi : Window
         {
             _mRegistersUi[t] = new string("x:" + t.ToString());
         }
-        
+
         string[] regArray = new string[10];
-        for (int i = 0; i < (_mRegistersUi.Count/10) + 1; i++)
+        for (int i = 0; i < (_mRegistersUi.Count / 10) + 1; i++)
         {
             for (int j = 1; j < 10; j++)
             {
-                if (i + ((j - 1) * 10) < _mRegistersUi.Count && i + ((j - 1) * 10) >= 0) regArray[j-1] = _mRegistersUi[i + ((j-1)*10)];
+                if (i + ((j - 1) * 10) < _mRegistersUi.Count && i + ((j - 1) * 10) >= 0) regArray[j - 1] = _mRegistersUi[i + ((j - 1) * 10)];
             }
             dt.Rows.Add(regArray);
         }

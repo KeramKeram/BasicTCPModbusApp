@@ -7,6 +7,7 @@ using NStack;
 
 namespace BasicTCPModbusApp.MainUI;
 
+
 public class MainUi : Window
 {
     private Dictionary<int, string>? _mRegistersUi;
@@ -148,5 +149,10 @@ public class MainUi : Window
         }
 
         _mTableView.Table = dt;
+    }
+
+    void updateRegisterView(Dictionary<int, string> registersValue)
+    {
+
     }
 }

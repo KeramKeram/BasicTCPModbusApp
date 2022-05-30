@@ -6,8 +6,8 @@ namespace BasicTCPModbusApp.Modbus
     class ModbuClient
     {
         private ModbusTcpClient _mClient = new ModbusTcpClient();
-        public string _mAddress = "127.0.0.1";
-        public int _mPort = 5020;
+        public string _mAddress { get; set; } = "127.0.0.1";
+        public int _mPort { get; set; } = 5020;
 
         ModbuClient() => _mClient.Connect(new IPEndPoint(IPAddress.Parse(_mAddress), _mPort));
 

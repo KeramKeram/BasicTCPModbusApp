@@ -1,5 +1,6 @@
 ﻿using Terminal.Gui;
 using BasicTCPModbusApp.MainUI;
+using BasicTCPModbusApp.Modbus;
 
 namespace BasicTCPModbusApp;
 
@@ -7,9 +8,17 @@ public class MainApp
 {
     static void Main()
     {
+        ModbuClient modbusClient = new ModbuClient();
+        var cmdSetIp = new SetIpAddressCommand(modbusClient);
+        var cmdSetPort = new SetIpPortCommand(modbusClient);
+        IInvoker modbusInvoker = new ModbusInvoker()
+        {
+            _mCmdSetIpAddress = cmdSetIp,
+            _mCmdSetIpPort = cmdSetPort
+        };
         Application.Init();
         var top = Application.Top;
-        MainUI.MainUi mainUiApp = new MainUI.MainUi()
+        MainUI.MainUi mainUiApp = new MainUI.MainUi(modbusInvoker)
         {
             X = 0,
             Y = 1,

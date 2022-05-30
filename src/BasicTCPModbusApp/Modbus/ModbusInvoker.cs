@@ -6,8 +6,9 @@ namespace BasicTCPModbusApp.Modbus
     {
         public void SetNetworkParameters(string ipAddress, int ipPort);
     };
-    class ModbusInvoker : IInvoker
+    public class ModbusInvoker : IInvoker
     {
+        public ModbusInvoker() { }
         public ICommand<string>? _mCmdSetIpAddress { get; set; }
         public ICommand<int>? _mCmdSetIpPort { get; set; }
 

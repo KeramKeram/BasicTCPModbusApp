@@ -1,5 +1,6 @@
 using NStack;
 using Terminal.Gui;
+using BasicTCPModbusApp.Modbus;
 
 namespace BasicTCPModbusApp.MainUI;
 

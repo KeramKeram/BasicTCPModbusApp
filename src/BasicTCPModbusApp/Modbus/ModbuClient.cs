@@ -3,15 +3,19 @@ using FluentModbus;
 
 namespace BasicTCPModbusApp.Modbus
 {
-    class ModbuClient
+    public class ModbuClient
     {
         private ModbusTcpClient _mClient = new ModbusTcpClient();
         public string _mAddress { get; set; } = "127.0.0.1";
         public int _mPort { get; set; } = 5020;
 
-        ModbuClient() => _mClient.Connect(new IPEndPoint(IPAddress.Parse(_mAddress), _mPort));
+        public ModbuClient() { }
 
         ~ModbuClient() => _mClient.Disconnect();
+
+        public void Connect() => _mClient.Connect(new IPEndPoint(IPAddress.Parse(_mAddress), _mPort));
+
+        public void Disconnect() => _mClient.Disconnect();
 
         public int ReadHoldingRegister(int unitIdent, int startingAddres)
         {

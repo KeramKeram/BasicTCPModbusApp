@@ -94,7 +94,7 @@ namespace BasicTCPModbusApp.Modbus
         private ModbuClient _mModbusClient;
         private string _mAddress = "127.0.0.1";
 
-        SetIpAddressCommand(ModbuClient client)
+        public SetIpAddressCommand(ModbuClient client)
         {
             _mModbusClient = client;
         }
@@ -117,7 +117,7 @@ namespace BasicTCPModbusApp.Modbus
         {
             _mPort = parameter;
         }
-        SetIpPortCommand(ModbuClient client)
+        public SetIpPortCommand(ModbuClient client)
         {
             _mModbusClient = client;
         }

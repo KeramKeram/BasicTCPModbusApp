@@ -4,6 +4,7 @@ using System;
 using System.Data;
 using Terminal.Gui;
 using NStack;
+using BasicTCPModbusApp.Modbus;
 
 namespace BasicTCPModbusApp.MainUI;
 
@@ -15,9 +16,11 @@ public class MainUi : Window
     private TextField _mDisplayLenghtTextField = new TextField();
     private Window? _mRegisterWindow;
     TableView? _mTableView;
+    private IInvoker _mModbusInvoker;
 
-    public MainUi() : base("MyApp")
+    public MainUi(IInvoker invoker) : base("MyApp")
     {
+        _mModbusInvoker = invoker;
         InitControlls();
         InitRegistersUi();
     }

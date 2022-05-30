@@ -6,9 +6,17 @@ namespace BasicTCPModbusApp.MainUI;
 
 public class NetworkDialog : Dialog
 {
-    public NetworkDialog(ustring title, int width, int height, params Button[] buttons) : base(title, width, height,
+    private TextField? _mIpEdit;
+    private TextField? _mPortEdit;
+    public NetworkDialog(IInvoker modbusInvoker, ustring title, int width, int height, params Button[] buttons) : base(title, width, height,
         buttons)
     {
+        buttons[0].Clicked += () => {
+            var ip = _mIpEdit == null ? "" : _mIpEdit.Text.ToString();
+            var port = _mPortEdit == null ? "" : _mPortEdit.Text.ToString();
+            modbusInvoker.SetNetworkParameters(ip ?? "127.0.0.1", int.Parse(port ?? "502"));
+            Application.RequestStop();
+        };
         Init();
     }
 
@@ -25,14 +33,14 @@ public class NetworkDialog : Dialog
         var labelIp = CreateLabel("IP Address:", 0, 0);
         frame.Add(labelIp);
 
-        var ipEdit = CreateTextField("127.0.0.1", Pos.Right(labelIp) + 1, Pos.Top(labelIp));
-        frame.Add(ipEdit);
+        _mIpEdit = CreateTextField("127.0.0.1", Pos.Right(labelIp) + 1, Pos.Top(labelIp));
+        frame.Add(_mIpEdit);
 
         var labelPort = CreateLabel("Port:", 0, Pos.Bottom(labelIp));
         frame.Add(labelPort);
 
-        var portEdit = CreateTextField("502", Pos.Right(labelPort) + 1, Pos.Top(labelPort));
-        frame.Add(portEdit);
+        _mPortEdit = CreateTextField("502", Pos.Right(labelPort) + 1, Pos.Top(labelPort));
+        frame.Add(_mPortEdit);
 
         var labelSlaveId = CreateLabel("Slave-id:", 0, Pos.Bottom(labelPort));
         frame.Add(labelSlaveId);

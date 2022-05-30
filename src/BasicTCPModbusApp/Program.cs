@@ -26,7 +26,7 @@ public class MainApp
             Height = Dim.Fill()
         };
 
-        Action showDialogDelegate = CreateNetworkDialogDelegateAction();
+        Action showDialogDelegate = CreateNetworkDialogDelegateAction(modbusInvoker);
 
         top.Add(mainUiApp);
         top.Add(CreateMenuBar(top, showDialogDelegate));
@@ -60,15 +60,16 @@ public class MainApp
         return n == 0;
     }
 
-    static Action CreateNetworkDialogDelegateAction()
+    static Action CreateNetworkDialogDelegateAction(IInvoker modbusInvoker)
     {
         return new Action(() =>
         {
             var buttons = new List<Button>();
             var button = new Button("OK");
-            button.Clicked += () => { Application.RequestStop(); };
+            /*button.Clicked += () => {
+                Application.RequestStop(); };*/
             buttons.Add(button);
-            var dialog = new NetworkDialog("Network Dialog", 40, 20,
+            var dialog = new NetworkDialog(modbusInvoker, "Network Dialog", 40, 20,
                 buttons.ToArray());
             Application.Run(dialog);
         });

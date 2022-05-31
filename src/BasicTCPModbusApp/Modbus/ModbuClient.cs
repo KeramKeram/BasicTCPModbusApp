@@ -41,5 +41,7 @@ namespace BasicTCPModbusApp.Modbus
             var intData = _mClient.ReadInputRegisters<int>(unitIdent, startingAddres, 1);
             return intData[0];
         }
+
+        public bool IsConnected() => _mClient.IsConnected;
     }
 }

@@ -11,6 +11,7 @@ public class NetworkDialog : Dialog
     public NetworkDialog(IInvoker modbusInvoker, ustring title, int width, int height, params Button[] buttons) : base(title, width, height,
         buttons)
     {
+        // OK Button
         buttons[0].Clicked += () => {
             var ip = _mIpEdit == null ? "" : _mIpEdit.Text.ToString();
             var port = _mPortEdit == null ? "" : _mPortEdit.Text.ToString();

@@ -66,8 +66,6 @@ public class MainApp
         {
             var buttons = new List<Button>();
             var button = new Button("OK");
-            /*button.Clicked += () => {
-                Application.RequestStop(); };*/
             buttons.Add(button);
             var dialog = new NetworkDialog(modbusInvoker, "Network Dialog", 40, 20,
                 buttons.ToArray());

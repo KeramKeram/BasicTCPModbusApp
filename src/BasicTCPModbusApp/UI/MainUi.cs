@@ -46,6 +46,17 @@ public class MainUi : Window
 
         _mControlWindow.Add(_mDisplayLenghtTextField);
 
+        var okbButtonAmountPoll = new Button()
+        {
+            X = Pos.Right(_mDisplayLenghtTextField) + 1,
+            Y = displayLengthLabel.Y,
+            Text = "OK"
+        };
+        okbButtonAmountPoll.Clicked += () => {
+            _mModbusInvoker.SetAmountElementsToPoll(int.Parse(_mDisplayLenghtTextField.Text.ToString() ?? "0"));
+        };
+        _mControlWindow.Add(okbButtonAmountPoll);
+
         var registerTypeLabel = new Label
         {
             X = Pos.Right(_mDisplayLenghtTextField) + 10,

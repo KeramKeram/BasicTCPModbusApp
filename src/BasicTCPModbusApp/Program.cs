@@ -16,7 +16,8 @@ public class MainApp
         IInvoker modbusInvoker = new ModbusInvoker()
         {
             _mCmdSetIpAddress = cmdSetIp,
-            _mCmdSetIpPort = cmdSetPort
+            _mCmdSetIpPort = cmdSetPort,
+            _mCmdSetAmountToPollCommand = cmdSetDisplayElemntsAmount
         };
         Application.Init();
         var top = Application.Top;

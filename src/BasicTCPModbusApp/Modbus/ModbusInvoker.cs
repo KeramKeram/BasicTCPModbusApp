@@ -6,7 +6,7 @@ namespace BasicTCPModbusApp.Modbus
     {
         public void SetNetworkParameters(string ipAddress, int ipPort);
 
-        public void SetDisplayElementsNumber(int number);
+        public void SetAmountElementsToPoll(int number);
 
         public bool StartPooling();
 
@@ -20,7 +20,7 @@ namespace BasicTCPModbusApp.Modbus
         public ModbusInvoker() { }
         public ICommand<string>? _mCmdSetIpAddress { private get; set; }
         public ICommand<int>? _mCmdSetIpPort { private get; set; }
-        public ICommand<int>? _mDisplayLengthCommand { private get; set; }
+        public ICommand<int>? _mCmdSetAmountToPollCommand { private get; set; }
 
         public void SetNetworkParameters(string ipAddress, int ipPort)
         {
@@ -30,10 +30,10 @@ namespace BasicTCPModbusApp.Modbus
             _mCmdSetIpPort?.Execute();
         }
 
-        public void SetDisplayElementsNumber(int number)
+        public void SetAmountElementsToPoll(int number)
         {
-            _mDisplayLengthCommand?.setParameter(number);
-            _mDisplayLengthCommand?.Execute();
+            _mCmdSetAmountToPollCommand?.setParameter(number);
+            _mCmdSetAmountToPollCommand?.Execute();
         }
 
         public bool StartPooling()

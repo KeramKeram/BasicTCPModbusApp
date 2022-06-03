@@ -9,8 +9,10 @@ public class MainApp
     static void Main()
     {
         ModbuClient modbusClient = new ModbuClient();
+        ModbusPoller modbusPoll = new ModbusPoller(modbusClient);
         var cmdSetIp = new SetIpAddressCommand(modbusClient);
         var cmdSetPort = new SetIpPortCommand(modbusClient);
+        var cmdSetDisplayElemntsAmount = new SetDispalyElementsAmount(modbusPoll);
         IInvoker modbusInvoker = new ModbusInvoker()
         {
             _mCmdSetIpAddress = cmdSetIp,

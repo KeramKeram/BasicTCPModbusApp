@@ -18,8 +18,9 @@ namespace BasicTCPModbusApp.Modbus
     public class ModbusInvoker : IInvoker
     {
         public ModbusInvoker() { }
-        public ICommand<string>? _mCmdSetIpAddress { get; set; }
-        public ICommand<int>? _mCmdSetIpPort { get; set; }
+        public ICommand<string>? _mCmdSetIpAddress { private get; set; }
+        public ICommand<int>? _mCmdSetIpPort { private get; set; }
+        public ICommand<int>? _mDisplayLengthCommand { private get; set; }
 
         public void SetNetworkParameters(string ipAddress, int ipPort)
         {
@@ -31,7 +32,8 @@ namespace BasicTCPModbusApp.Modbus
 
         public void SetDisplayElementsNumber(int number)
         {
-
+            _mDisplayLengthCommand?.setParameter(number);
+            _mDisplayLengthCommand?.Execute();
         }
 
         public bool StartPooling()

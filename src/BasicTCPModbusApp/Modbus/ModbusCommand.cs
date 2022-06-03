@@ -59,25 +59,37 @@ namespace BasicTCPModbusApp.Modbus
         }
     }
 
-    class SetDispalyElementsAmount : ICommand<int>
+    class SetDispalyElementsAmountCommand : ICommand<int>
     {
         private ModbusPoller _mPoller;
         private int _mLength { get; set; } = 0;
 
-        public SetDispalyElementsAmount(ModbusPoller poller) => _mPoller = poller;
+        public SetDispalyElementsAmountCommand(ModbusPoller poller) => _mPoller = poller;
         public void setParameter(int parameter) => _mLength = parameter;
         public void Execute() => _mPoller._mAmountToPool = _mLength;
     }
 
-    class StartPoolingCommand<T> : ICommand<T>
+    class StartPoolingCommand : ICommand<Boolean>
     {
-        public void setParameter(T parameter)
-        {
-
-        }
+        private ModbusPoller _mPoller;
+        public StartPoolingCommand(ModbusPoller poller) => _mPoller = poller;
+        public void setParameter(Boolean parameter)
+        {}
         public void Execute()
         {
+            _mPoller.StartPolling();
+        }
+    }
 
+    class StopPoolingCommand : ICommand<Boolean>
+    {
+        private ModbusPoller _mPoller;
+        public StopPoolingCommand(ModbusPoller poller) => _mPoller = poller;
+        public void setParameter(Boolean parameter)
+        { }
+        public void Execute()
+        {
+            _mPoller.StopPolling();
         }
     }
 

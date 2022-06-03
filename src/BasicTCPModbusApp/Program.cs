@@ -12,12 +12,16 @@ public class MainApp
         ModbusPoller modbusPoll = new ModbusPoller(modbusClient);
         var cmdSetIp = new SetIpAddressCommand(modbusClient);
         var cmdSetPort = new SetIpPortCommand(modbusClient);
-        var cmdSetDisplayElemntsAmount = new SetDispalyElementsAmount(modbusPoll);
+        var cmdSetDisplayElemntsAmount = new SetDispalyElementsAmountCommand(modbusPoll);
+        var cmdStartPolling = new StartPoolingCommand(modbusPoll);
+        var cmdStopPolling = new StopPoolingCommand(modbusPoll);
         IInvoker modbusInvoker = new ModbusInvoker()
         {
             _mCmdSetIpAddress = cmdSetIp,
             _mCmdSetIpPort = cmdSetPort,
-            _mCmdSetAmountToPollCommand = cmdSetDisplayElemntsAmount
+            _mCmdSetAmountToPollCommand = cmdSetDisplayElemntsAmount,
+            _mCmdStartPolling = cmdStartPolling,
+            _mCmdStopPolling = cmdStopPolling
         };
         Application.Init();
         var top = Application.Top;

@@ -15,5 +15,15 @@ namespace BasicTCPModbusApp.Modbus
         {
             _mModbusClient = client;
         }
+
+        public void StartPolling()
+        {
+
+        }
+
+        public void StopPolling()
+        {
+
+        }
     }
 }

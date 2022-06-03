@@ -21,6 +21,8 @@ namespace BasicTCPModbusApp.Modbus
         public ICommand<string>? _mCmdSetIpAddress { private get; set; }
         public ICommand<int>? _mCmdSetIpPort { private get; set; }
         public ICommand<int>? _mCmdSetAmountToPollCommand { private get; set; }
+        public ICommand<Boolean>? _mCmdStartPolling { private get; set; }
+        public ICommand<Boolean>? _mCmdStopPolling { private get; set; }
 
         public void SetNetworkParameters(string ipAddress, int ipPort)
         {

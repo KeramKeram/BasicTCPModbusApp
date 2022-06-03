@@ -90,18 +90,33 @@ public class MainUi : Window
         };
         _mControlWindow.Add(statusLabelValue);
 
-        var poolingButton = new Button()
+        var startPoolingButton = new Button()
         {
             X = displayLengthLabel.X,
             Y = Pos.Bottom(registerTypeRadio) + 1,
             Text = "Start Pooling"
         };
-        _mControlWindow.Add(poolingButton);
+        startPoolingButton.Clicked += () => {
+            _mModbusInvoker.StartPooling();
+        };
+        _mControlWindow.Add(startPoolingButton);
+
+        var stopPoolingButton = new Button()
+        {
+            X = Pos.Right(startPoolingButton) + 1,
+            Y = Pos.Bottom(registerTypeRadio) + 1,
+            Text = "Stop Pooling"
+        };
+        stopPoolingButton.Clicked += () => {
+            _mModbusInvoker.StopPooling();
+        };
+        _mControlWindow.Add(stopPoolingButton);
+
 
         var setRegisterButton = new Button()
         {
             X = Pos.Right(registerTypeLabel),
-            Y = poolingButton.Y,
+            Y = startPoolingButton.Y,
             Text = "Set Register"
         };
         _mControlWindow.Add(setRegisterButton);

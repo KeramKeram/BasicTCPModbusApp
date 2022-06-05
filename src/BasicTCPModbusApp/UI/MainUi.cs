@@ -72,6 +72,15 @@ public class MainUi : Window
             Y = displayLengthLabel.Y,
             SelectedItem = 0,
         };
+        registerTypeRadio.SelectedItemChanged += (e) => { 
+            switch(e.SelectedItem)
+            {
+                case 0: _mModbusInvoker.SetRegisterType(RegiterType.Coils); break;
+                case 1: _mModbusInvoker.SetRegisterType(RegiterType.Status); break;
+                case 2: _mModbusInvoker.SetRegisterType(RegiterType.InputRegister); break;
+                case 3: _mModbusInvoker.SetRegisterType(RegiterType.HoldingRegister); break;
+            }
+        };
         _mControlWindow.Add(registerTypeRadio);
 
         var statusLabel = new Label

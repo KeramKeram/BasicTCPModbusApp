@@ -20,22 +20,19 @@ namespace BasicTCPModbusApp.Modbus
         void Execute();
     }
 
-    class ChangeRegisterTypeCommand<T> : ICommand<T>
+    class ChangeRegisterTypeCommand : ICommand<RegiterType>
     {
-        private RegiterType _mType { get; set; }
+        private ModbusPoller _mPoller;
+        
+        private RegiterType _mRegiterType;
 
-        public ChangeRegisterTypeCommand(RegiterType type)
-        {
-            _mType = type;
-        }
-        public void setParameter(T parameter)
-        {
+        public ChangeRegisterTypeCommand(ModbusPoller poll) => _mPoller = poll;
 
-        }
+        public void setParameter(RegiterType parameter) => _mRegiterType = parameter;
 
         public void Execute()
         {
-
+            _mPoller._mRegisterType = _mRegiterType;
         }
     }
 

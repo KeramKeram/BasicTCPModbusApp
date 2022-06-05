@@ -11,6 +11,8 @@ namespace BasicTCPModbusApp.Modbus
         private ModbuClient _mModbusClient;
         public int _mAmountToPool { private get; set; } = 0;
 
+        public RegiterType _mRegisterType { private get; set; } = RegiterType.Coils;
+
         public ModbusPoller(ModbuClient client)
         {
             _mModbusClient = client;

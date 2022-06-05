@@ -15,13 +15,15 @@ public class MainApp
         var cmdSetDisplayElemntsAmount = new SetDispalyElementsAmountCommand(modbusPoll);
         var cmdStartPolling = new StartPoolingCommand(modbusPoll);
         var cmdStopPolling = new StopPoolingCommand(modbusPoll);
+        var cmdSetRegisterType = new ChangeRegisterTypeCommand(modbusPoll);
         IInvoker modbusInvoker = new ModbusInvoker()
         {
             _mCmdSetIpAddress = cmdSetIp,
             _mCmdSetIpPort = cmdSetPort,
             _mCmdSetAmountToPollCommand = cmdSetDisplayElemntsAmount,
             _mCmdStartPolling = cmdStartPolling,
-            _mCmdStopPolling = cmdStopPolling
+            _mCmdStopPolling = cmdStopPolling,
+            _mCmdSetRegisterType = cmdSetRegisterType
         };
         Application.Init();
         var top = Application.Top;

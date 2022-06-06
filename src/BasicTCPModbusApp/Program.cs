@@ -8,10 +8,9 @@ public class MainApp
 {
     static void Main()
     {
-        ModbuClient modbusClient = new ModbuClient();
-        ModbusPoller modbusPoll = new ModbusPoller(modbusClient);
-        var cmdSetIp = new SetIpAddressCommand(modbusClient);
-        var cmdSetPort = new SetIpPortCommand(modbusClient);
+        ModbusPoller modbusPoll = new ModbusPoller(new());
+        var cmdSetIp = new SetIpAddressCommand(modbusPoll);
+        var cmdSetPort = new SetIpPortCommand(modbusPoll);
         var cmdSetDisplayElemntsAmount = new SetDispalyElementsAmountCommand(modbusPoll);
         var cmdStartPolling = new StartPoolingCommand(modbusPoll);
         var cmdStopPolling = new StopPoolingCommand(modbusPoll);

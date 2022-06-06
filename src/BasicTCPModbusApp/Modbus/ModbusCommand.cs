@@ -30,10 +30,7 @@ namespace BasicTCPModbusApp.Modbus
 
         public void setParameter(RegiterType parameter) => _mRegiterType = parameter;
 
-        public void Execute()
-        {
-            _mPoller._mRegisterType = _mRegiterType;
-        }
+        public void Execute() => _mPoller._mRegisterType = _mRegiterType;
     }
 
     class SetRegisterCommand : ICommand<Tuple<int, int>>
@@ -42,19 +39,13 @@ namespace BasicTCPModbusApp.Modbus
         private int _mAddress = 0;
         private int _mValue = 0;
 
-        public SetRegisterCommand(ModbusPoller modbusPoller)
-        {
-            _mModbusPoller = modbusPoller;
-        }
+        public SetRegisterCommand(ModbusPoller modbusPoller) => _mModbusPoller = modbusPoller;
         public void setParameter(Tuple<int, int> parameter)
         {
             _mAddress = parameter.Item1;
             _mValue = parameter.Item2;
         }
-        public void Execute()
-        {
-            _mModbusPoller.SetRegister(_mAddress, _mValue);
-        }
+        public void Execute() => _mModbusPoller.SetRegister(_mAddress, _mValue);
     }
 
     class SetDispalyElementsAmountCommand : ICommand<int>
@@ -73,10 +64,7 @@ namespace BasicTCPModbusApp.Modbus
         public StartPoolingCommand(ModbusPoller poller) => _mPoller = poller;
         public void setParameter(Boolean parameter)
         {}
-        public void Execute()
-        {
-            _mPoller.StartPolling();
-        }
+        public void Execute() => _mPoller.StartPolling();
     }
 
     class StopPoolingCommand : ICommand<Boolean>
@@ -85,49 +73,28 @@ namespace BasicTCPModbusApp.Modbus
         public StopPoolingCommand(ModbusPoller poller) => _mPoller = poller;
         public void setParameter(Boolean parameter)
         { }
-        public void Execute()
-        {
-            _mPoller.StopPolling();
-        }
+        public void Execute() => _mPoller.StopPolling();
     }
 
     class SetIpAddressCommand : ICommand<string>
     {
-        private ModbuClient _mModbusClient;
+        private ModbusPoller _mModbusPoller;
         private string _mAddress = "127.0.0.1";
 
-        public SetIpAddressCommand(ModbuClient client)
-        {
-            _mModbusClient = client;
-        }
-        public void setParameter(string parameter)
-        {
-            _mAddress = parameter;
-        }
-        public void Execute()
-        {
-            _mModbusClient._mAddress = _mAddress;
-        }
+        public SetIpAddressCommand(ModbusPoller poller) => _mModbusPoller = poller;
+
+        public void setParameter(string parameter) => _mAddress = parameter;
+        public void Execute() => _mModbusPoller._mModbusClient._mAddress = _mAddress;
     }
 
     class SetIpPortCommand : ICommand<int>
     {
-        private ModbuClient _mModbusClient;
+        private ModbusPoller _mModbusPoller;
         private int _mPort = 502;
 
-        public void setParameter(int parameter)
-        {
-            _mPort = parameter;
-        }
-        public SetIpPortCommand(ModbuClient client)
-        {
-            _mModbusClient = client;
-        }
-        public void Execute()
-        {
-            _mModbusClient._mPort = _mPort;
-
-        }
+        public void setParameter(int parameter) => _mPort = parameter;
+        public SetIpPortCommand(ModbusPoller poller) => _mModbusPoller = poller;
+        public void Execute() => _mModbusPoller._mModbusClient._mPort = _mPort;
     }
 
 }

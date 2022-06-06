@@ -8,7 +8,7 @@ namespace BasicTCPModbusApp.Modbus
 {
     public class ModbusPoller
     {
-        private ModbuClient _mModbusClient;
+        public ModbuClient _mModbusClient { get; init; }
         public int _mAmountToPool { private get; set; } = 0;
 
         public RegiterType _mRegisterType { private get; set; } = RegiterType.Coils;

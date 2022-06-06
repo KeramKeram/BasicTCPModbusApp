@@ -23,6 +23,7 @@ namespace BasicTCPModbusApp.Modbus
         public ICommand<int>? _mCmdSetAmountToPollCommand { private get; set; }
         public ICommand<Boolean>? _mCmdStartPolling { private get; set; }
         public ICommand<Boolean>? _mCmdStopPolling { private get; set; }
+        public ICommand<RegiterType>? _mCmdSetRegisterType { private get; set; }
 
         public void SetNetworkParameters(string ipAddress, int ipPort)
         {
@@ -50,7 +51,8 @@ namespace BasicTCPModbusApp.Modbus
 
         public void SetRegisterType(RegiterType type)
         {
-
+            _mCmdSetRegisterType?.setParameter(type);
+            _mCmdSetRegisterType?.Execute();
         }
     }
 

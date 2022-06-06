@@ -36,30 +36,31 @@ namespace BasicTCPModbusApp.Modbus
         }
     }
 
-    class SetRegisterCommand<T> : ICommand<T>
+    class SetRegisterCommand : ICommand<Tuple<int, int>>
     {
-        private int _mAddress { get; set; }
-        private int _mValue { get; set; }
+        private ModbusPoller _mModbusPoller;
+        private int _mAddress = 0;
+        private int _mValue = 0;
 
-        public SetRegisterCommand(int address, int value)
+        public SetRegisterCommand(ModbusPoller modbusPoller)
         {
-            _mAddress = address;
-            _mValue = value;
+            _mModbusPoller = modbusPoller;
         }
-        public void setParameter(T parameter)
+        public void setParameter(Tuple<int, int> parameter)
         {
-
+            _mAddress = parameter.Item1;
+            _mValue = parameter.Item2;
         }
         public void Execute()
         {
-
+            _mModbusPoller.SetRegister(_mAddress, _mValue);
         }
     }
 
     class SetDispalyElementsAmountCommand : ICommand<int>
     {
         private ModbusPoller _mPoller;
-        private int _mLength { get; set; } = 0;
+        public int _mLength = 0;
 
         public SetDispalyElementsAmountCommand(ModbusPoller poller) => _mPoller = poller;
         public void setParameter(int parameter) => _mLength = parameter;

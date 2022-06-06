@@ -27,5 +27,10 @@ namespace BasicTCPModbusApp.Modbus
         {
 
         }
+
+        public void SetRegister(int address, int value)
+        {
+
+        }
     }
 }

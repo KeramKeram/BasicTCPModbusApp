@@ -8,7 +8,7 @@ public class MainApp
 {
     static void Main()
     {
-        ModbusPoller modbusPoll = new ModbusPoller(new());
+        ModbusPoller modbusPoll = new ModbusPoller();
         var cmdSetIp = new SetIpAddressCommand(modbusPoll);
         var cmdSetPort = new SetIpPortCommand(modbusPoll);
         var cmdSetDisplayElemntsAmount = new SetDispalyElementsAmountCommand(modbusPoll);

@@ -58,13 +58,14 @@ namespace BasicTCPModbusApp.Modbus
         public void Execute() => _mPoller._mAmountToPool = _mLength;
     }
 
-    class StartPoolingCommand : ICommand<Boolean>
+    class StartPoolingCommand : ICommand<Action<LinkedList<string>>>
     {
         private ModbusPoller _mPoller;
         public StartPoolingCommand(ModbusPoller poller) => _mPoller = poller;
-        public void setParameter(Boolean parameter)
-        {}
-        public void Execute() => _mPoller.StartPolling();
+
+        private Action<LinkedList<string>> _mCallback = (LinkedList<string> callback) => {};
+        public void setParameter(Action<LinkedList<string>> parameter) => _mCallback = parameter;
+        public void Execute() => _mPoller.StartPolling(_mCallback);
     }
 
     class StopPoolingCommand : ICommand<Boolean>

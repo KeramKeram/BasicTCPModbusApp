@@ -33,14 +33,14 @@ namespace BasicTCPModbusApp.Modbus
         public void Execute() => _mPoller._mRegisterType = _mRegiterType;
     }
 
-    class SetRegisterCommand : ICommand<Tuple<int, int>>
+    class SetRegisterCommand : ICommand<Tuple<int, ushort>>
     {
         private ModbusPoller _mModbusPoller;
         private int _mAddress = 0;
-        private int _mValue = 0;
+        private ushort _mValue = 0;
 
         public SetRegisterCommand(ModbusPoller modbusPoller) => _mModbusPoller = modbusPoller;
-        public void setParameter(Tuple<int, int> parameter)
+        public void setParameter(Tuple<int, ushort> parameter)
         {
             _mAddress = parameter.Item1;
             _mValue = parameter.Item2;

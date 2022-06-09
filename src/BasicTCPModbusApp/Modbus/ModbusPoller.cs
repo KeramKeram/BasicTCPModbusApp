@@ -29,9 +29,13 @@ namespace BasicTCPModbusApp.Modbus
             _mModbusClient.Disconnect();
         }
 
-        public void SetRegister(int address, int value)
+        public void SetRegister(int address, ushort value)
         {
-
+            switch (_mRegisterType)
+            {
+                case RegiterType.Coils: _mModbusClient.SetCoil(address, Convert.ToBoolean(value)); break;
+                case RegiterType.HoldingRegister: _mModbusClient.SetHoldingRegister(address, value); break;
+            }
         }
 
         private LinkedList<string> readCurrentRegisterTable()

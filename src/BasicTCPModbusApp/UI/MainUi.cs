@@ -150,6 +150,15 @@ public class MainUi : Window
             Text = "Value"
         };
         _mControlWindow.Add(registerValueToSet);
+        setRegisterButton.Clicked += () => {
+            var adr = registerAddressToSet.Text.ToString();
+            var val = registerValueToSet.Text.ToString();
+            if (adr is null || val is null)
+            {
+                return;
+            }
+            _mModbusInvoker.SetRegister(int.Parse(adr), ushort.Parse(val));
+        };
         this.Add(_mControlWindow);
     }
 

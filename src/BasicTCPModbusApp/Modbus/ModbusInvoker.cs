@@ -13,6 +13,7 @@ namespace BasicTCPModbusApp.Modbus
         public bool StopPooling();
 
         public void SetRegisterType(RegiterType type);
+        public void SetRegister(int address, ushort value);
     };
 
     public class ModbusInvoker : IInvoker
@@ -24,6 +25,7 @@ namespace BasicTCPModbusApp.Modbus
         public ICommand<Action<LinkedList<string>>>? _mCmdStartPolling { private get; set; }
         public ICommand<Boolean>? _mCmdStopPolling { private get; set; }
         public ICommand<RegiterType>? _mCmdSetRegisterType { private get; set; }
+        public ICommand<Tuple<int, ushort>>? _mCmdSetRegister { private get; set; }
 
         public void SetNetworkParameters(string ipAddress, int ipPort)
         {
@@ -54,6 +56,12 @@ namespace BasicTCPModbusApp.Modbus
             _mCmdSetRegisterType?.setParameter(type);
             _mCmdSetRegisterType?.Execute();
         }
+
+        public void SetRegister(int address, ushort value)
+        {
+            _mCmdSetRegister?.setParameter(Tuple.Create(address, value));
+            _mCmdSetRegister?.Execute();
+        } 
     }
 
 }

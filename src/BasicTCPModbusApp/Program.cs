@@ -8,21 +8,16 @@ public class MainApp
 {
     static void Main()
     {
-        ModbusPoller modbusPoll = new ModbusPoller();
-        var cmdSetIp = new SetIpAddressCommand(modbusPoll);
-        var cmdSetPort = new SetIpPortCommand(modbusPoll);
-        var cmdSetDisplayElemntsAmount = new SetDispalyElementsAmountCommand(modbusPoll);
-        var cmdStartPolling = new StartPoolingCommand(modbusPoll);
-        var cmdStopPolling = new StopPoolingCommand(modbusPoll);
-        var cmdSetRegisterType = new ChangeRegisterTypeCommand(modbusPoll);
+        ModbusPoller modbusPollr = new();
         IInvoker modbusInvoker = new ModbusInvoker()
         {
-            _mCmdSetIpAddress = cmdSetIp,
-            _mCmdSetIpPort = cmdSetPort,
-            _mCmdSetAmountToPollCommand = cmdSetDisplayElemntsAmount,
-            _mCmdStartPolling = cmdStartPolling,
-            _mCmdStopPolling = cmdStopPolling,
-            _mCmdSetRegisterType = cmdSetRegisterType
+            _mCmdSetIpAddress = new SetIpAddressCommand(modbusPollr),
+            _mCmdSetIpPort = new SetIpPortCommand(modbusPollr),
+            _mCmdSetAmountToPollCommand = new SetDispalyElementsAmountCommand(modbusPollr),
+            _mCmdStartPolling = new StartPoolingCommand(modbusPollr),
+            _mCmdStopPolling = new StopPoolingCommand(modbusPollr),
+            _mCmdSetRegisterType = new ChangeRegisterTypeCommand(modbusPollr),
+            _mCmdSetRegister = new SetRegisterCommand(modbusPollr)
         };
         Application.Init();
         var top = Application.Top;

@@ -17,21 +17,14 @@ namespace BasicTCPModbusApp.Modbus
 
         public void Disconnect() => _mClient.Disconnect();
 
-        public void SetHoldingRegister(int unitIdent, int startingAddres)
+        public void SetHoldingRegister(int address, ushort value)
         {
-
+            _mClient.WriteSingleRegister(0, address, value);
         }
 
-        public void SetCoil(int unitIdent, int startingAddres)
+        public void SetCoil(int address, bool value)
         {
-        }
-
-        public void SetDiscreteInputs(int unitIdent, int startingAddres)
-        {
-        }
-
-        public void SetInputRegisters(int unitIdent, int startingAddres)
-        {
+            _mClient.WriteSingleCoil(0, address, value);
         }
 
         public int ReadHoldingRegister(int unitIdent, int startingAddres)

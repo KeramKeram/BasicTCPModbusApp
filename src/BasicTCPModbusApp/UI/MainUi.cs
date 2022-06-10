@@ -52,7 +52,8 @@ public class MainUi : Window
             Y = displayLengthLabel.Y,
             Text = "OK"
         };
-        okbButtonAmountPoll.Clicked += () => {
+        okbButtonAmountPoll.Clicked += () =>
+        {
             _mModbusInvoker.SetAmountElementsToPoll(int.Parse(_mDisplayLenghtTextField.Text.ToString() ?? "0"));
         };
         _mControlWindow.Add(okbButtonAmountPoll);
@@ -72,8 +73,9 @@ public class MainUi : Window
             Y = displayLengthLabel.Y,
             SelectedItem = 0,
         };
-        registerTypeRadio.SelectedItemChanged += (e) => { 
-            switch(e.SelectedItem)
+        registerTypeRadio.SelectedItemChanged += (e) =>
+        {
+            switch (e.SelectedItem)
             {
                 case 0: _mModbusInvoker.SetRegisterType(RegiterType.Coils); break;
                 case 1: _mModbusInvoker.SetRegisterType(RegiterType.Status); break;
@@ -91,6 +93,16 @@ public class MainUi : Window
         };
         _mControlWindow.Add(statusLabel);
 
+        var statusTextField = new TextField
+        {
+            X = Pos.Right(statusLabel),
+            Y = statusLabel.Y,
+            Width = 29,
+            Height = 10,
+            Text = ""
+        };
+        _mControlWindow.Add(statusTextField);
+
         var statusLabelValue = new Label
         {
             X = Pos.Right(statusLabel) + 1,
@@ -105,7 +117,8 @@ public class MainUi : Window
             Y = Pos.Bottom(registerTypeRadio) + 1,
             Text = "Start Pooling"
         };
-        startPoolingButton.Clicked += () => {
+        startPoolingButton.Clicked += () =>
+        {
             _mModbusInvoker.StartPooling();
         };
         _mControlWindow.Add(startPoolingButton);
@@ -116,7 +129,8 @@ public class MainUi : Window
             Y = Pos.Bottom(registerTypeRadio) + 1,
             Text = "Stop Pooling"
         };
-        stopPoolingButton.Clicked += () => {
+        stopPoolingButton.Clicked += () =>
+        {
             _mModbusInvoker.StopPooling();
         };
         _mControlWindow.Add(stopPoolingButton);
@@ -150,14 +164,27 @@ public class MainUi : Window
             Text = "Value"
         };
         _mControlWindow.Add(registerValueToSet);
-        setRegisterButton.Clicked += () => {
+        setRegisterButton.Clicked += () =>
+        {
             var adr = registerAddressToSet.Text.ToString();
             var val = registerValueToSet.Text.ToString();
             if (adr is null || val is null)
             {
                 return;
             }
-            _mModbusInvoker.SetRegister(int.Parse(adr), ushort.Parse(val));
+            try
+            {
+                _mModbusInvoker.SetRegister(int.Parse(adr), ushort.Parse(val));
+            }
+            catch (System.FormatException)
+            {
+                statusTextField.Text = "Error:Wrong address/value.";
+
+            }
+            catch (System.NullReferenceException)
+            {
+                statusTextField.Text = "Error:Connection problem.";
+            }
         };
         this.Add(_mControlWindow);
     }

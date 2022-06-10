@@ -8,9 +8,9 @@ namespace BasicTCPModbusApp.Modbus
 
         public void SetAmountElementsToPoll(int number);
 
-        public bool StartPooling();
+        public void StartPooling(Action<LinkedList<string>> callback);
 
-        public bool StopPooling();
+        public void StopPooling();
 
         public void SetRegisterType(RegiterType type);
         public void SetRegister(int address, ushort value);
@@ -41,14 +41,15 @@ namespace BasicTCPModbusApp.Modbus
             _mCmdSetAmountToPollCommand?.Execute();
         }
 
-        public bool StartPooling()
+        public void StartPooling(Action<LinkedList<string>> callback)
         {
-            return true;
+            _mCmdStartPolling?.setParameter(callback);
+            _mCmdStartPolling?.Execute();
         }
 
-        public bool StopPooling()
+        public void StopPooling()
         {
-            return true;
+            _mCmdStopPolling?.Execute();
         }
 
         public void SetRegisterType(RegiterType type)

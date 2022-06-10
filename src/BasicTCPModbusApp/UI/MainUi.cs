@@ -127,18 +127,18 @@ public class MainUi : Window
         };
         stopPoolingButton.Clicked += () =>
         {
-            _mModbusInvoker.StopPooling();
-            stopPoolingButton.ColorScheme = Colors.Error;
-            startPoolingButton.ColorScheme = Colors.Base;
+            try
+            {
+                _mModbusInvoker.StopPooling();
+                stopPoolingButton.ColorScheme = Colors.Error;
+                startPoolingButton.ColorScheme = Colors.Base;
+            }
+            catch(System.Exception)
+            {
+                statusTextField.Text = "Error:Can't stop polling.";
+            }
         };
         _mControlWindow.Add(stopPoolingButton);
-
-        startPoolingButton.Clicked += () =>
-        {
-            _mModbusInvoker.StartPooling();
-            stopPoolingButton.ColorScheme = Colors.Base;
-            startPoolingButton.ColorScheme = Colors.Error;
-        };
 
         var setRegisterButton = new Button()
         {
@@ -187,6 +187,21 @@ public class MainUi : Window
             catch (System.NullReferenceException)
             {
                 statusTextField.Text = "Error:Connection problem.";
+            }
+        };
+
+        startPoolingButton.Clicked += () =>
+        {
+            Action<LinkedList<string>> callback = updateRegisterView;
+            try
+            {
+                _mModbusInvoker.StartPooling(callback);
+                stopPoolingButton.ColorScheme = Colors.Base;
+                startPoolingButton.ColorScheme = Colors.Error;
+            }
+            catch (System.Exception)
+            {
+                statusTextField.Text = "Error:Can't start polling.Connection problem.";
             }
         };
         this.Add(_mControlWindow);
@@ -240,7 +255,7 @@ public class MainUi : Window
         _mTableView.Table = dt;
     }
 
-    void updateRegisterView(Dictionary<int, string> registersValue)
+    void updateRegisterView(LinkedList<string> view)
     {
 
     }

@@ -117,10 +117,6 @@ public class MainUi : Window
             Y = Pos.Bottom(registerTypeRadio) + 1,
             Text = "Start Pooling"
         };
-        startPoolingButton.Clicked += () =>
-        {
-            _mModbusInvoker.StartPooling();
-        };
         _mControlWindow.Add(startPoolingButton);
 
         var stopPoolingButton = new Button()
@@ -132,9 +128,17 @@ public class MainUi : Window
         stopPoolingButton.Clicked += () =>
         {
             _mModbusInvoker.StopPooling();
+            stopPoolingButton.ColorScheme = Colors.Error;
+            startPoolingButton.ColorScheme = Colors.Base;
         };
         _mControlWindow.Add(stopPoolingButton);
 
+        startPoolingButton.Clicked += () =>
+        {
+            _mModbusInvoker.StartPooling();
+            stopPoolingButton.ColorScheme = Colors.Base;
+            startPoolingButton.ColorScheme = Colors.Error;
+        };
 
         var setRegisterButton = new Button()
         {
@@ -179,7 +183,6 @@ public class MainUi : Window
             catch (System.FormatException)
             {
                 statusTextField.Text = "Error:Wrong address/value.";
-
             }
             catch (System.NullReferenceException)
             {

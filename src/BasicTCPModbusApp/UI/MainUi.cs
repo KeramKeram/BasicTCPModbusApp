@@ -193,7 +193,7 @@ public class MainUi : Window
 
         startPoolingButton.Clicked += () =>
         {
-            Action<LinkedList<string>> callback = updateRegisterView;
+            Action<LinkedList<string>> callback = updateRegisterTable;
             try
             {
                 _mModbusInvoker.StartPooling(callback);
@@ -213,7 +213,7 @@ public class MainUi : Window
         string registerAmountStr = _mDisplayLenghtTextField.Text.ToString() ?? "1";
         int registerAmount = int.Parse(registerAmountStr);
         _mRegistersUi = new Dictionary<int, string>(registerAmount);
-        _mRegisterWindow = new Window($"Registers")
+        _mRegisterWindow = new Window("Registers")
         {
             X = Pos.Center(),
             Y = Pos.Bottom(_mControlWindow),
@@ -256,8 +256,30 @@ public class MainUi : Window
         _mTableView.Table = dt;
     }
 
-    void updateRegisterView(LinkedList<string> view)
+    void updateRegisterTable(LinkedList<string> view)
     {
+        _mRegistersUi = new Dictionary<int, string>(view.Count);
+        for (int i = 0; i < view.Count; i++)
+        {
+            _mRegistersUi[i] = new string(i.ToString() +":" + view.ElementAt(i));
+        }
+        int numberOfColumns = (view.Count / 10) + 1;
+        var dt = new DataTable();
+        for (int x = 0; x < numberOfColumns; x++)
+        {
+            dt.Columns.Add("");
+        }
 
+        string[] regArray = new string[10];
+        for (int i = 0; i < (_mRegistersUi.Count / 10) + 1; i++)
+        {
+            for (int j = 1; j < 10; j++)
+            {
+                if (i + ((j - 1) * 10) < _mRegistersUi.Count && i + ((j - 1) * 10) >= 0) regArray[j - 1] = _mRegistersUi[i + ((j - 1) * 10)];
+            }
+            dt.Rows.Add(regArray);
+        }
+
+        _mTableView.Table = dt;
     }
 }

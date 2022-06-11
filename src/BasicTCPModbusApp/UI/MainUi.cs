@@ -27,7 +27,7 @@ public class MainUi : Window
 
     private void InitControlls()
     {
-        _mControlWindow = new Window($"Control")
+        _mControlWindow = new Window("Control")
         {
             X = Pos.Center(),
             Y = 1,
@@ -180,6 +180,7 @@ public class MainUi : Window
             try
             {
                 _mModbusInvoker.SetRegister(int.Parse(adr), ushort.Parse(val));
+                statusTextField.Text = "Register set OK.";
             }
             catch (System.FormatException)
             {
@@ -199,6 +200,7 @@ public class MainUi : Window
                 _mModbusInvoker.StartPooling(callback);
                 stopPoolingButton.ColorScheme = Colors.Base;
                 startPoolingButton.ColorScheme = Colors.Error;
+                statusTextField.Text = "Polled OK.";
             }
             catch (System.Exception)
             {
@@ -279,7 +281,9 @@ public class MainUi : Window
             }
             dt.Rows.Add(regArray);
         }
-
-        _mTableView.Table = dt;
+        if (_mTableView is not null)
+        {
+            _mTableView.Table = dt;
+        }
     }
 }

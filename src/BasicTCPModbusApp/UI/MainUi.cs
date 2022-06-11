@@ -35,7 +35,7 @@ public class MainUi : Window
             Height = 8
         };
 
-        var displayLengthLabel = new Label($"Display Length:");
+        var displayLengthLabel = new Label("Display Length:");
         _mControlWindow.Add(displayLengthLabel);
 
         _mDisplayLenghtTextField.X = Pos.Right(displayLengthLabel) + 1;
@@ -43,6 +43,7 @@ public class MainUi : Window
         _mDisplayLenghtTextField.Width = 10;
         _mDisplayLenghtTextField.Height = 10;
         _mDisplayLenghtTextField.Text = "90";
+        _mModbusInvoker.SetAmountElementsToPoll((int.Parse(_mDisplayLenghtTextField.Text.ToString() ?? "0")));
 
         _mControlWindow.Add(_mDisplayLenghtTextField);
 

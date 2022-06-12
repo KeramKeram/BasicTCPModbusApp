@@ -29,8 +29,8 @@ namespace BasicTCPModbusApp.Modbus
 
         public int ReadHoldingRegister(int unitIdent, int startingAddres)
         {
-            var intData = _mClient.ReadHoldingRegisters<int>(unitIdent, startingAddres, 1);
-            return intData[0];
+            var intData = _mClient.ReadHoldingRegisters(Convert.ToByte(unitIdent), Convert.ToByte(startingAddres), 1);
+            return intData[1];
         }
 
         public int ReadCoil(int unitIdent, int startingAddres)

@@ -31,10 +31,13 @@ namespace BasicTCPModbusApp.Modbus
 
         public void SetRegister(int address, ushort value)
         {
+            byte[] valueBytes = BitConverter.GetBytes(value);
+            (valueBytes[0], valueBytes[1]) = (valueBytes[1], valueBytes[0]);
+            ushort convertedValue = BitConverter.ToUInt16(valueBytes);
             switch (_mRegisterType)
             {
-                case RegiterType.Coils: _mModbusClient.SetCoil(address, Convert.ToBoolean(value)); break;
-                case RegiterType.HoldingRegister: _mModbusClient.SetHoldingRegister(address, value); break;
+                case RegiterType.Coils: _mModbusClient.SetCoil(address, Convert.ToBoolean(convertedValue)); break;
+                case RegiterType.HoldingRegister: _mModbusClient.SetHoldingRegister(address, convertedValue); break;
             }
         }
 
